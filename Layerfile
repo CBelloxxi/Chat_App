@@ -9,8 +9,8 @@ RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
 
 FROM frontend:latest AS frontend
 FROM backend:latest AS backend
-COPY --from=frontend /app/build /frontend
-COPY --from=backend /app /backend
+COPY --from=frontend /app/build /frontend /
+COPY --from=backend /app /backend /
 
 # node is a memory hog
 MEMORY 2G
