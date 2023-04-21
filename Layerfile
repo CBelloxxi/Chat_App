@@ -7,10 +7,9 @@ RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
     apt-get install nodejs python3 make gcc build-essential && \
     rm -f /etc/apt/sources.list.d/nodesource.list
 
-FROM frontend:latest AS frontend
-FROM backend:latest AS backend
-COPY --from=frontend /app/build /frontend /
-COPY --from=backend /app /backend /
+docker build -t frontend:latest -f frontend/Layerfile .
+docker build -t backend:latest -f backend/Layerfile .
+docker build -t myapp:latest .
 
 # node is a memory hog
 MEMORY 2G
