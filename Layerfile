@@ -1,11 +1,29 @@
+#This is an example webapp.io configuration for React!
+FROM vm/ubuntu:18.04
+
+# To note: Layerfiles create entire VMs, *not* containers!
+
+RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
+    apt-get install reactjs nodejs python3 make gcc build-essential && \
+    rm -f /etc/apt/sources.list.d/nodesource.list
+
 FROM frontend:latest AS frontend
 FROM backend:latest AS backend
 COPY --from=frontend /app/build /frontend
 COPY --from=backend /app /backend
-EXPOSE 3000
-CMD ["node", "/backend/index.js"]
+
+# node is a memory hog
+MEMORY 2G
+ENV NODE_OPTIONS=--max-old-space-size=8192
+
+COPY . .
+RUN npm install || true
+RUN BACKGROUND npm start || python3 -m http.server 3000
 
 docker build -t frontend:latest -f frontend/Layerfile .
 docker build -t backend:latest -f backend/Layerfile .
 docker build -t Chat_App:latest .
 docker run -p 3000:3000 Chat_App:latest
+
+# Every time someone clicks the link, we'll wake up this staging server.
+EXPOSE WEBSITE http://localhost:3000
