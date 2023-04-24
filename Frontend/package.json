@@ -3,6 +3,7 @@
   "private": "false",
   "version": "0.0.0",
   "type": "module",
+  "homepage": "http://192.168.0.232:5173/",
 
   "scripts": {
     "start": "npm run dev",
