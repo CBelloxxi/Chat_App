@@ -3,7 +3,6 @@
   "private": "false",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://6446cbfd0dbb160008da2bf2--super-lebkuchen-f6eea7.netlify.app/",
 
   "scripts": {
     "start": "npm run dev",
